@@ -121,11 +121,13 @@ from typing import (
     Tuple,
     Iterator,
     Text,
+    overload,
     TYPE_CHECKING,
 )
 
 import numpy as np
 from sortedcontainers import SortedDict
+from typing_extensions import Literal
 
 from . import (
     PYANNOTE_SEGMENT,
@@ -136,7 +138,17 @@ from .segment import Segment, SlidingWindow
 from .timeline import Timeline
 from .feature import SlidingWindowFeature
 from .utils.generators import string_generator, int_generator
-from .utils.types import Label, Key, Support, LabelGenerator, TrackName, CropMode
+from .utils.types import (
+    Label,
+    Key,
+    Support,
+    LabelGenerator,
+    TrackName,
+    Track,
+    LabeledTrack,
+    TrackIterator,
+    CropMode,
+)
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -259,9 +271,14 @@ class Annotation:
         """
         return iter(self._tracks)
 
-    def itertracks(
-        self, yield_label: bool = False
-    ) -> Iterator[Union[Tuple[Segment, TrackName], Tuple[Segment, TrackName, Label]]]:
+    @overload
+    def itertracks(self, yield_label: Literal[False] = ...) -> Iterator[Track]: ...
+    @overload
+    def itertracks(self, yield_label: Literal[True]) -> Iterator[LabeledTrack]: ...
+    @overload
+    def itertracks(self, yield_label: bool) -> TrackIterator: ...
+
+    def itertracks(self, yield_label: bool = False) -> TrackIterator:
         """Iterate over tracks (in chronological order)
 
         Parameters
