@@ -1380,9 +1380,7 @@ class Annotation:
 
         return support
 
-    def co_iter(
-        self, other: "Annotation"
-    ) -> Iterator[Tuple[Tuple[Segment, TrackName], Tuple[Segment, TrackName]]]:
+    def co_iter(self, other: "Annotation") -> Iterator[Tuple[Track, Track]]:
         """Iterate over pairs of intersecting tracks
 
         Parameters
@@ -1516,7 +1514,7 @@ class Annotation:
     @classmethod
     def from_records(
         cls,
-        records: Iterator[Tuple[Segment, TrackName, Label]],
+        records: Iterator[LabeledTrack],
         uri: Optional[str] = None,
         modality: Optional[str] = None,
     ) -> "Annotation":

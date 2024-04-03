@@ -16,7 +16,7 @@ TrackName = Union[str, int]
 Track = Tuple['Segment', TrackName]
 LabeledTrack = Tuple['Segment', TrackName, Label]
 TrackIterator = Union[Iterator[Track], Iterator[LabeledTrack]]
-Key = Union['Segment', Tuple['Segment', TrackName]]
+Key = Union['Segment', Track]
 Resource = Union['Segment', 'Timeline', 'SlidingWindowFeature',
                  'Annotation']
 CropMode = Literal['intersection', 'loose', 'strict']
