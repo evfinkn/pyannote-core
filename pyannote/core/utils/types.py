@@ -1,6 +1,12 @@
-from typing import Hashable, Union, Tuple, Iterator
+from typing import Hashable, Union, Tuple, Iterator, TYPE_CHECKING
 
 from typing_extensions import Literal
+
+if TYPE_CHECKING:
+    from ..segment import Segment
+    from ..timeline import Timeline
+    from ..feature import SlidingWindowFeature
+    from ..annotation import Annotation
 
 Label = Hashable
 Support = Union['Segment', 'Timeline']
